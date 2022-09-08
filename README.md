@@ -489,3 +489,18 @@ linux notes
 	man crontab
 	man 5 crontab
 
+
+# Understand file system paths
+	sudo yum install tree
+	tree /etc
+	file /etc/services
+	
+	
+	
+# Create files and dirs
+	vim ~/textfile.txt
+	echo "test" >> ~/textfile.txt
+	mkdir ~/newdir
+	mkdir -p ~/parent/child
+	mkdir ~/{dir1,dir2,dir3}
+	ls -d ~/dir?
