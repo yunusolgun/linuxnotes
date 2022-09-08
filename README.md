@@ -18,17 +18,17 @@ linux notes
 
 
 Network tools:		
-nmtui
-nmcli
-man mncli-examples
-sudo nmcli c reload
-sudo nmcli con load /etc/syscondif/netwok-scripts/ifcfg-enp0s3
-sudo nmcli dev disconnect enp0s3
-sudo nmcli con up enp0s3
-nmcli con show
-nmcli con show --active
-nmcli general status
-nmcli con edit
+	nmtui
+	nmcli
+	man mncli-examples
+	sudo nmcli c reload
+	sudo nmcli con load /etc/syscondif/netwok-scripts/ifcfg-enp0s3
+	sudo nmcli dev disconnect enp0s3
+	sudo nmcli con up enp0s3
+	nmcli con show
+	nmcli con show --active
+	nmcli general status
+	nmcli con edit
 
 
 
