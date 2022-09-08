@@ -17,7 +17,7 @@ linux notes
 		IPADDR=10.0.1.27
 
 
-Network tools:		
+# Network tools:		
 	nmtui
 	nmcli
 	man mncli-examples
