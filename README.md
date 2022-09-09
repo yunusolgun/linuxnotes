@@ -504,3 +504,59 @@ linux notes
 	mkdir -p ~/parent/child
 	mkdir ~/{dir1,dir2,dir3}
 	ls -d ~/dir?
+
+
+	
+
+# Find files using Locate
+	locate bzip2
+	locate -c bzip2
+	locate bzip2 man
+	locate -c bzip2 man
+	locate -A bzip2 man
+	locate -i high
+	locate --regexp '^/usr.*pixmaps.*jpg$'
+	locate --regex '^/usr.*(pixmaps|backgrounds).*jpg'
+	locate -S
+	sudo updatedb
+	
+	
+	
+# Finding files with Find
+	sudo find / -name bzip2
+	sudo find / -name *bzip2* | sort
+	sudo find / -user grant
+	sudo find / -group grant
+	sudo find / -size +50k
+	sudo find / -size +1M -exec stat -c "%s %n" {} \;
+	sudo find / -size +1M -exec stat -c "%s %n" {} \; | sort -n
+	sudo find / -mtime -1
+	sudo find / -mtime +1
+	sudo find /home -type f
+	sudo find /home -type d
+	
+	
+	
+# Archive files
+	sudo tar --xattrs -cvpf etc.tar /etc
+	sudo tar --xattrs --gzip -vcfp etc.tar.gz /etc
+	sudo tar --xattrs --bzip2 -vcfp etc.tar.bz2 /etc
+	sudo tar --xattrs --xz -vcfp etc.tar.xz /etc
+	tar -tf etc.tar
+	tar -tf etc.tar | grep firewall
+	sudo tar --xattrs -xvpf etc.tar
+	sudo tar --xattrs -xvpf etc.tar -C /home/user1/Downloads
+	
+	
+	
+
+# Compress files
+	gzip services
+	gunzip services.gz
+	bzip2 services
+	bunzip2 services.bz2
+	xz services
+	unxz services.xz
+	zip services.zip services
+	unzip services.zip
+	
