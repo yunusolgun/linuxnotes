@@ -559,4 +559,154 @@ linux notes
 	unxz services.xz
 	zip services.zip services
 	unzip services.zip
+
+
+
+
+# User booleans to modify SELinux behavior
+	getsebool -a
+	getsebool mozilla_plugin_use_gps
+	sestatus -b
+	sudo semanage boolean -l
+	sudo setsebool mozilla_plugin_use_gps on
+	sudo setsebool -P mozilla_plugin_use_gps on
+	sudo semanage boolean -l | egrep 'SElinux|mozilla_plugin_use_gps'
 	
+	
+	
+
+# Diagnose routing SELinux policy violations
+	sudo chcon -t etc_t /etc/shadow
+	sudo ls -lZ /etc/shadow
+	sudo ausearch -m avc
+	sudo restorecon /etc/shadow
+	
+	
+	
+
+#Configure access and authentication using PAM
+	ldd /bin/su
+	
+	
+
+# Using pam_tally2
+	sudo vi /etc/pam.d/password-auth
+		auth required pam_tally2 deny=5 unlock_time=60
+	sudo vi /etc/pam.d/system-auth
+		auth required pam_tally2 deny=5 unlock_time=60
+	sudo pam_tally2 -u user1
+	sudo pam_tally2 -r -u user1
+	
+
+
+
+	
+# Change default password policies
+	cat /etc/security/pwquality.conf
+	sudo passwd --expire grant
+	sudo chage -d 0 grant
+	
+	
+
+
+	
+# Lock user accounts and change password aging
+	chage -d 0
+	chage --lastday 2017-10-25
+	chage --expiredate 2017-10-25
+	chage --inactive 7
+	chage --mindays 0
+	chage --maxdays 99999
+	chage --warndays 7
+	chage --list grant
+	
+
+
+	
+# Implementing SSH keypairs for authentication
+	ssh-keygen
+	ssh-copy-id user1@192.168.0.21
+	ssh-add
+	
+	
+
+	
+# Deny access using TCP Wrappers
+	/etc/hosts.allow
+	/etc/hosts.deny
+
+
+
+
+# Restrict access to TTY consoles
+	/etc/securetty
+
+
+
+
+
+# Compare and contrast Linux firewalls
+	iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+	
+	firewall-cmd --zone=public --permanent --add-service=ssh
+	iptables -A INPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+	
+	
+	
+
+
+# User firewalld for packet filtering
+	sudo systemctl start firewalld
+	sudo systemctl enable firewalld
+	sudo firewall-cmd --state
+	sudo firewall-cmd --timeout=60
+	sudo firewall-cmd --permanent
+	sudo firewall-cmd --permanent --add-service=http
+	sudo firewall-cmd --permanent --remove-service=http
+	sudo firewall-cmd --permanent --add-port=443/tcp
+	sudo firewall-cmd --permanent --add-port=5901-5910/tcp
+	sudo firewall-cmd --reload
+	sudo firewall-cmd --get-services
+	sudo firewall-cmd --list-services
+	sudo firewall-cmd --list-ports
+	
+	
+	
+	
+# Use firewalld zones
+	sudo firewall-cmd --get-default-zone
+	sudo firewall-cmd --list-all-zones
+	sudo firewall-cmd --permananet --new-zone=coffeeshop
+	sudo firewall-cmd --permanent --add-source=10.10.10.0/24
+	sudo firewall-cmd --permanent --add-service=http
+	sudo firewall-cmd --reload
+	sudo firewall-cmd --set-default-zone=coffeshop
+	sudo firewall-cmd --get-default-zone
+	sudo firewall-cmd --reload
+	sudo firewall-cmd --list-all --zone=coffeshop
+	
+	
+	
+	
+# Use firewalld for NAT
+	sudo firewall-cmd --permanent --zone=coffeshop --add-masquerade
+	sudo firewall-cmd --permanent --query-masquerade
+	sudo firewall-cmd --permanent --zone?coffeeshop --add-rich-rule='rule familu=ipv3 source address=192.168.100.0/24 masquerade'
+	sudo firewall-cmd --permanent --zone=coffeeshop --add-forward-port=22:proto=tcp:toport=2222:toaddr=192.168.100.101
+	sudo firewall-cmd --permanent --list-all --zone=coffeeshop
+
+
+
+
+# Create dynamic rules
+	sudo yum install -y epel-release
+	sudo yum install -y fail2ban fail2ban-systemd
+	sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+	sudo vi /etc/fail2ban/jail.local
+	sudo systemctl start firewalld
+	sudo systemctl enable firewalld
+	sudo systemctl start fail2ban
+	sudo systemctl enable fail2ban
+	sudo fail2ban-client status
+
+
