@@ -710,3 +710,47 @@ linux notes
 	sudo fail2ban-client status
 
 
+
+
+# Locate and interpret system log files
+	sudo systemctl start rsyslog
+	sudo systemctl enable rsyslog
+	less -N /etc/rsyslog.conf
+	
+	
+	
+# Reading the system journal
+	sudo journalctl
+	sudo journalctl -k
+	sudo journalctl /sbin/crond
+	sudo journalctl -u crond
+	sudo journalctl -f
+	sudo mkdir -p /var/log/journal
+	sudo systemctl restart systemd-journald
+	journalctl --since yestarday
+	
+	
+	
+# Rsyslog filters
+	sudo less -N /etc/logrotate.conf
+	ls /etc/logrotate.d
+	
+	
+	
+# Rsyslog actions
+	cron.* /var/log/cron.log
+	cron.* -/var/log/cron.log
+
+
+
+# Archiving files with tar and cpio
+	sudo tar --xattrs -cvpf etc.tar /etc
+	sudo tar --xattrs --gzip -cvpf etc.tar.gz /etc
+	sudo tar --xattrs --bzip2 -cvpf etc.tar.bz2 /etc
+	sudo tar --xatrrs --xz -cvpf etc.tar.xz /etc
+	sudo tar --xattrs -xvpf etc.tar
+	sudo tar --xattrs -xvpf etc.tar -C /home/user1/Downloads
+	
+	
+	
+
